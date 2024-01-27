@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAJ</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffcc00; /* Yellow background */
+            font-family: Arial, sans-serif; /* Standard font */
+        }
+        .name {
+            font-size: 8em; /* Larger font size */
+            color: #ff3399; /* Pink color */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="name">RAJ</span>
+    </div>
+</body>
+</html>
