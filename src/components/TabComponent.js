@@ -1,18 +1,35 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
+
 import axios from "axios";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Button from "@mui/material/Button";
+
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { DatePicker, TimePicker } from "@mui/lab";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 const AstroForm = () => {
+  const [aananasa, setAananasa] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState(null);
+  const [time, setTime] = useState(null);
+  const [chartType, setChartType] = useState("");
+  const [chartStyle, setChartStyle] = useState("");
+  const [language, setLanguage] = useState("");
+
   const [ayanamsa, setAyanamsa] = useState("");
   const [coordinates, setCoordinates] = useState("");
   const [datetime, setDateTime] = useState("");
-  const [chartType, setChartType] = useState("");
-  const [chartStyle, setChartStyle] = useState("");
+
   const [format, setFormat] = useState("");
   const [la, setLa] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -23,28 +40,33 @@ const AstroForm = () => {
   const [age, setAge] = React.useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    switch (event.target.name) {
+      case "aananasa":
+        setAananasa(event.target.value);
+        break;
+      case "location":
+        setLocation(event.target.value);
+        break;
+      case "chartType":
+        setChartType(event.target.value);
+        break;
+      case "chartStyle":
+        setChartStyle(event.target.value);
+        break;
+      case "language":
+        setLanguage(event.target.value);
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleSubmit = async () => {
-    try {
-      // const response = await axios.get(`https://api.example.com/data/${selectedOptions.option1}/${selectedOptions.option2}/${selectedOptions.option3}/${selectedOptions.option4}/${selectedOptions.option5}`);
-      // setResponseData(response.data);
-      const response = await axios.get(
-        `https://prokerala-api-proxy.appilivamsikrishna.workers.dev/v2/astrology/chart?ayanamsa=1&coordinates=10.214747,78.097626&datetime=2022-03-17T10:50:40Z&chart_type=rasi&chart_style=south-indian&format=svg&la=en`,
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJiZjM5MmEwNC1mMThiLTRlMmEtOTg4OS02OGE1MjNjZjY3MDQiLCJqdGkiOiJkYjEzMWYzMzQzMTNhN2U4ZjU2NWZlMGQ4N2NlM2Y4NmUxMWM1ZmJjMGI3ZDRmZmRkNzNmNzVjZGZjZDJkYmI3MDliZTZiNzM0NzNhOWRhZSIsImlhdCI6MTcwODU4MTMwMi4wNzgxMDIsIm5iZiI6MTcwODU4MTMwMi4wNzgxMDMsImV4cCI6MTcwODU4NDkwMi4wNzc5ODYsInN1YiI6IjdmODdlOWQ4LTdmOGQtNDJhNC05ZGFmLTE1NGMzODE3ZjlkZCIsInNjb3BlcyI6W10sImNyZWRpdHNfcmVtYWluaW5nIjo1MDAwLCJyYXRlX2xpbWl0cyI6W3sicmF0ZSI6NSwiaW50ZXJ2YWwiOjYwfV19.fedylLkoRAqXChlM7fJXeu0LCf0WY9u6D6kS64ohfFofmASfFzRqMHSc43mSG87vhVWP10dumylVou8RSB3_804QPjWjiklSIJe1BnK6ezvLX6axUQ7eG_f_b32KfqK3xmqF2i7q8HTI4D8Pwu_9_ULJgkTmkXaXOXD7weoByU5oqj3-nNQxDfPNnbKPOAiGy2_cMJ9nUC_1agSNTVZATS-vmAP5NdyOTkpkl8NfUr1tUHUmX0S_i-z1JrpMdJV6pKRDVb3_O9yL-co3vTNMCzxK6c1KCA7X20g7YbcuV_L8Jj6tmznnbARx2v8JLqOXfif6MFKl8uTyXam9M6zHTw",
-          },
-        }
-      );
-      setResult(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const handleDateChange = (newValue) => {
+    setDate(newValue);
+  };
 
-    setIsLoading(false);
+  const handleTimeChange = (newValue) => {
+    setTime(newValue);
   };
 
   const handleClick = async () => {
@@ -55,7 +77,7 @@ const AstroForm = () => {
       // const response = await axios.get(`https://api.example.com/data/${selectedOptions.option1}/${selectedOptions.option2}/${selectedOptions.option3}/${selectedOptions.option4}/${selectedOptions.option5}`);
       // setResponseData(response.data);
       const response = await axios.get(
-        `https://prokerala-api-proxy.appilivamsikrishna.workers.dev/v2/astrology/chart?ayanamsa=1&coordinates=10.214747,78.097626&datetime=2022-03-17T10:50:40Z&chart_type=rasi&chart_style=south-indian&format=svg&la=en`
+        `https://prokerala-api-proxy.appilivamsikrishna.workers.dev/v2/astrology/chart?ayanamsa=1&coordinates=13.6288, 79.4192&datetime=1998-12-31T05:40:00Z&chart_type=rasi&chart_style=south-indian&format=svg&ln=en`
       );
       setResponse(response.data);
       console.log(response.data);
@@ -66,7 +88,7 @@ const AstroForm = () => {
     setLoading(false);
   };
 
-  const handleClic2 = async () => {
+  const handleClick2 = async () => {
     setLoading(true);
     setError(null);
     setResult(null);
@@ -87,50 +109,155 @@ const AstroForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Ayanamsa:
-          <input
-            type="text"
-            value={ayanamsa}
-            onChange={(e) => setAyanamsa(e.target.value)}
-          />
-        </label>
-        {/* Add other input fields similarly */}
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Submit"}
-        </button>
-      </form>
-      {error && <div>Error: {error}</div>}
-      {result && <div>Result: {JSON.stringify(result)}</div>}
+      <h1>Welcome to MS Astrology Kundali Calculator</h1>
 
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <InputLabel id="aananasa-label">Aananasa</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="Age"
+            labelId="aananasa-label"
+            id="aananasa"
+            value={aananasa}
+            label="Aananasa"
             onChange={handleChange}
+            name="aananasa"
           >
-            <MenuItem value={10}>Tentyx</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={1}>Lahiri</MenuItem>
+            <MenuItem value={3}>Raman </MenuItem>
+            <MenuItem value={5}> KP astrology</MenuItem>
           </Select>
         </FormControl>
 
-        <Button variant="contained" onClick={handleClick} disabled={loading}>
-          {loading ? "Loading..." : "Submit"}
-        </Button>
-        {error && <div>Error: {error}</div>}
-        {result && <div>Result: {JSON.stringify(response)}</div>}
+        <FormControl fullWidth>
+          <InputLabel id="aananasa-label">Date</InputLabel>
+          <Select
+            labelId="aananasa-label"
+            id="aananasa"
+            value={aananasa}
+            label="Aananasa"
+            onChange={handleChange}
+            name="aananasa"
+          >
+            <MenuItem value={1}>Lahiri</MenuItem>
+            <MenuItem value={3}>Raman </MenuItem>
+            <MenuItem value={5}> KP astrology</MenuItem>
+          </Select>
+        </FormControl>
 
-        <Button variant="contained" onClick={handleClic2} disabled={loading}>
-          {loading ? "Loading..." : "Submit"}
-        </Button>
-        {error && <div>Error: {error}</div>}
-        {result && <div>Result: {JSON.stringify(response)}</div>}
+        <FormControl fullWidth>
+          <InputLabel id="aananasa-label">Time</InputLabel>
+          <Select
+            labelId="aananasa-label"
+            id="aananasa"
+            value={aananasa}
+            label="Aananasa"
+            onChange={handleChange}
+            name="aananasa"
+          >
+            <MenuItem value={1}>Lahiri</MenuItem>
+            <MenuItem value={3}>Raman </MenuItem>
+            <MenuItem value={5}> KP astrology</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth>
+          <InputLabel id="location-label">Location</InputLabel>
+          <Select
+            labelId="location-label"
+            id="location"
+            value={location}
+            label="Location"
+            onChange={handleChange}
+            name="location"
+          >
+            <MenuItem value="13.0827, 80.2707">Chennai</MenuItem>
+            <MenuItem value="13.6288, 79.4192">Tirupati</MenuItem>
+            <MenuItem value="17.3850, 78.4867">Hyderabad</MenuItem>
+            <MenuItem value="12.9716, 77.5946">Bangalore</MenuItem>
+          </Select>
+        </FormControl>
+
+
+      
+
+        <DatePicker
+          label="Date"
+          value={date}
+          onChange={handleDateChange}
+          renderInput={(params) => <TextField {...params} />}
+        />
+
+        <TimePicker
+          label="Time"
+          value={time}
+          onChange={handleTimeChange}
+          renderInput={(params) => <TextField {...params} />}
+          ampm={false}
+        />
+
+        <FormControl fullWidth>
+          <InputLabel id="chartType-label">ChartType</InputLabel>
+          <Select
+            labelId="chartType-label"
+            id="chartType"
+            value={chartType}
+            label="ChartType"
+            onChange={handleChange}
+            name="chartType"
+          >
+            <MenuItem value="option1">Option 1</MenuItem>
+            <MenuItem value="option2">Option 2</MenuItem>
+            <MenuItem value="option3">Option 3</MenuItem>
+            <MenuItem value="option4">Option 4</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth>
+          <InputLabel id="chartStyle-label">ChartStyle</InputLabel>
+          <Select
+            labelId="chartStyle-label"
+            id="chartStyle"
+            value={chartStyle}
+            label="ChartStyle"
+            onChange={handleChange}
+            name="chartStyle"
+          >
+            <MenuItem value="option1">Option 1</MenuItem>
+            <MenuItem value="option2">Option 2</MenuItem>
+            <MenuItem value="option3">Option 3</MenuItem>
+            <MenuItem value="option4">Option 4</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth>
+          <InputLabel id="language-label">Language</InputLabel>
+          <Select
+            labelId="language-label"
+            id="language"
+            value={language}
+            label="Language"
+            onChange={handleChange}
+            name="language"
+          >
+            <MenuItem value="option1">Option 1</MenuItem>
+            <MenuItem value="option2">Option 2</MenuItem>
+            <MenuItem value="option3">Option 3</MenuItem>
+            <MenuItem value="option4">Option 4</MenuItem>
+          </Select>
+        </FormControl>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Button variant="contained" onClick={handleClick} disabled={loading}>
+            {loading ? "Loading..." : "Submit"}
+          </Button>
+          <div dangerouslySetInnerHTML={{ __html: response }} />
+        </Box>
       </Box>
     </div>
   );
