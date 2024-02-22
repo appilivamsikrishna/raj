@@ -177,9 +177,6 @@ const AstroForm = () => {
           </Select>
         </FormControl>
 
-
-      
-
         <DatePicker
           label="Date"
           value={date}
