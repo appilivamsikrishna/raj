@@ -1,7 +1,7 @@
 
 
 
-// components/About.js
+// components/About.js dddd
 import React from 'react';
 
 function About() {
