@@ -1,0 +1,17 @@
+/* styles/App.css */
+.App {
+    text-align: center;
+  }
+  
+  .MuiAppBar-colorPrimary {
+    background-color: #2196f3; /* Blue color */
+  }
+  
+  .MuiTabs-root {
+    background-color: #2196f3; /* Blue color */
+  }
+  
+  .MuiTab-root {
+    color: #fff; /* White color for tab labels */
+  }
+  
